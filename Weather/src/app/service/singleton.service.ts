@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SingletonService {
 
+  city: string;
   day = [];
   weekTemperature = [];
   favorites = [];

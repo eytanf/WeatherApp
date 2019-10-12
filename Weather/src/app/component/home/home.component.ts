@@ -234,18 +234,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges;
-    if(this.singleton.day.length > 0){
-      this.temperature = this.singleton.weekTemperature[0];
-      this.day = this.singleton.day;
-      this.weekTemperature = this.singleton.weekTemperature;
-      this.singleton.favorites.filter(obj => {
-        if(obj.city === this.city){
-          this.isFavorite = true;
-        }
-      });
+    if(this.singleton.city){
+      this.myControl.setValue(this.singleton.city);
+      this.getFiveDaysOfDailyForecasts();
     }
     else{
-      this.getFiveDaysOfDailyForecasts();
+      if(this.singleton.day.length > 0){
+        this.temperature = this.singleton.weekTemperature[0];
+        this.day = this.singleton.day;
+        this.weekTemperature = this.singleton.weekTemperature;
+        this.singleton.favorites.filter(obj => {
+          if(obj.city === this.city){
+            this.isFavorite = true;
+          }
+        });
+      }
+      else{
+        this.getFiveDaysOfDailyForecasts();
+      }
     }
   }
 
@@ -292,6 +298,12 @@ export class HomeComponent implements OnInit {
         this.isFavorite = true;
       }
     });
+    //Temp
+    this.singleton.favorites.filter(obj => {
+      if(obj.city === this.city){
+        this.isFavorite = true;
+      }
+    });
     // Set variables to show on screen
     this.temp.DailyForecasts.forEach((day) => {
       this.day[i] = this.utcDayToWeekDay(day.EpochDate);
@@ -299,6 +311,10 @@ export class HomeComponent implements OnInit {
       this.weekSunState[i] = day.Day.PrecipitationType;
       ++i;
     })
+    if(this.myControl.value){
+      this.isFavorite = false;
+      this.city = this.myControl.value;
+    }
     // Set today and singleton
     this.temperature = this.weekTemperature[0];
     this.singleton.day = this.day;
@@ -317,6 +333,10 @@ export class HomeComponent implements OnInit {
     //     this.weekSunState[i] = day.Day.PrecipitationType;
     //     ++i;
     //   })
+    //   if(this.myControl.value){
+    //     this.isFavorite = false;
+    //     this.city = this.myControl.value;
+    //   }
     //   // Set today and singleton
     //   this.temperature = this.weekTemperature[0];
     //   this.singleton.day = this.day;

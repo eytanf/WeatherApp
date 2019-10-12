@@ -5,19 +5,21 @@
 
 <!--favorites-->
 <div *ngIf="favorites.length !== 0" class="favorites-div container">
-  <div *ngFor="let option of favorites" class="row">
-    <div class="col-md-2 weather-div weather-container">
-      <button class="delete-from-favorites-button float-right" (click)="deleteFromFavorites(option.city)">
-        <mat-icon>clear</mat-icon>
-      </button>
-      <br>
-      <br>
-      <span class="city-span">{{option.city}}</span>
-      <br>
-      <span class="temperature-span">{{option.temperature}}</span>
-      <img src="../../../assets/celsius-degrees-symbol-of-temperature.svg" class="temperature-celsius">
-      <br>
-      <span class="sun-type-span">{{option.sunType}}</span>
+  <div class="row">
+    <div *ngFor="let option of favorites">
+      <div class="col-md-12 weather-div weather-container">
+        <button class="delete-from-favorites-button float-right" (click)="deleteFromFavorites(option.city)">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <button class="transparent-button" (click)="moveToHome(option.city)">
+          <span class="city-span">{{option.city}}</span>
+          <br>
+          <span class="temperature-span">{{option.temperature}}</span>
+          <img src="../../../assets/celsius-degrees-symbol-of-temperature.svg" class="temperature-celsius">
+          <br>
+          <span class="sun-type-span">{{option.sunType}}</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
